@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'application'
+}
+
+sourceSets {
+   main {
+      java {
+         srcDir 'src/main/java'
+      }
+      resources {
+         srcDir 'src/main/resources'
+      }
+   }
+}
+
+mainClassName = 'com.palmg.bi.emotionnpl.EmotionNplApp'
+class GroupAndVersion {
+	String group
+	String version
+}
+
+ext {
+	spring = new GroupAndVersion(group:'org.springframework', version:'5.0.7.RELEASE')
+	vertx = new GroupAndVersion(group:'io.vertx', version:'3.5.3')
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	compile group: spring.group, name: 'spring-core', version: spring.version
+	compile group: spring.group, name: 'spring-beans', version: spring.version
+	compile group: spring.group, name: 'spring-context', version: spring.version
+	compile group: 'com.baidu.aip', name: 'java-sdk', version: '4.5.0'
+	compile group: vertx.group, name: 'vertx-core', version: vertx.version
+	compile group: vertx.group, name: 'vertx-web', version: vertx.version
+	compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.11.1'
+    testCompile 'junit:junit:4.12'
+}
+
+repositories {
+    jcenter()
+}
+
+task showProperties << {
+   println spring.group
+   println spring.version
+}
+
+task show << {
+	println configurations.compile.asPath
+}
